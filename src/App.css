@@ -1,0 +1,192 @@
+/* تعريف المتغيرات */
+:root {
+  --primary-color: #1F6F78;
+  --accent-color: #D4AF37;
+  --background-color: #f5f6f7;
+  --surface-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+}
+
+.dark {
+  --background-color: #1a1a1a;
+  --surface-color: #2d2d2d;
+  --text-color: #ffffff;
+  --border-color: #444444;
+}
+
+/* الأساسيات */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Amiri', serif;
+}
+
+body {
+  direction: rtl;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* الهيدر */
+.header {
+  height: 60px;
+  background: linear-gradient(to left, var(--primary-color), #164E54);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.title-container {
+  flex: 1;
+  text-align: center;
+}
+
+.title {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+}
+
+.title-decoration {
+  width: 100px;
+  height: 2px;
+  background-color: var(--accent-color);
+  margin: 4px auto 0;
+  border-radius: 1px;
+}
+
+/* المحتوى */
+.content {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* القائمة الجانبية */
+.sidebar {
+  width: 85%;
+  max-width: 400px;
+  background-color: var(--surface-color);
+  position: fixed;
+  top: 60px;
+  right: -100%;
+  bottom: 0;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.search-container {
+  padding: 16px;
+}
+
+.search-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+  flex: 1;
+  background-color: var(--surface-color);
+  overflow-y: auto;
+}
+
+.welcome-message {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.welcome-pattern {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  opacity: 0.1;
+}
+
+.welcome-message h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-message p {
+  font-size: 18px;
+  opacity: 0.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* تحسينات للموبايل */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+  
+  .icon-button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}

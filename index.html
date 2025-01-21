@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1F6F78;
+            --accent-color: #D4AF37;
+            --background-color: #f5f6f7;
+            --surface-color: #ffffff;
+            --text-color: #333333;
+            --border-color: #dddddd;
+        }
+
+        .dark {
+            --background-color: #1a1a1a;
+            --surface-color: #2d2d2d;
+            --text-color: #ffffff;
+            --border-color: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amiri', serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .app {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* الهيدر */
+        .header {
+            height: 60px;
+            background: linear-gradient(to left, var(--primary-color), #164E54);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            position: relative;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .title-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .title {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .title-decoration {
+            width: 100px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 0 auto;
+        }
+
+        /* المحتوى */
+        .content {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        /* القائمة الجانبية */
+        .sidebar {
+            width: 300px;
+            background-color: var(--surface-color);
+            position: fixed;
+            top: 60px;
+            right: -300px;
+            bottom: 0;
+            transition: right 0.3s;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .search-container {
+            padding: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* قائمة السور */
+        .surah-list {
+            padding: 0 16px;
+        }
+
+        .surah-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .surah-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(to left, var(--primary-color), #164E54);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: 12px;
+        }
+
+        .surah-details {
+            flex: 1;
+        }
+
+        .surah-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .surah-info {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            margin-right: 0;
+            padding: 20px;
+            transition: margin-right 0.3s;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        /* عرض الآيات */
+        .ayah-container {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .ayah-text {
+            font-size: 24px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .ayah-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 8px;
+        }
+
+        .tafsir {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0.8;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <button class="icon-button" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="title-container">
+                <h1 class="title">القرآن الكريم</h1>
+                <div class="title-decoration"></div>
+            </div>
+            <button class="icon-button" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <main class="content">
+            <aside class="sidebar" id="sidebar">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="ابحث عن سورة..." oninput="searchSurahs(this.value)">
+                </div>
+                <div class="surah-list" id="surahList">
+                    <!-- سيتم ملؤها بالجافاسكريبت -->
+                </div>
+            </aside>
+
+            <div class="main-content" id="mainContent">
+                <div class="welcome-message">
+                    <h2 class="welcome-title">أهلاً بك في تطبيق القرآن الكريم</h2>
+                    <p class="welcome-subtitle">الرجاء اختيار سورة من القائمة</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let surahs = [];
+        let isDarkMode = false;
+
+        // تحميل السور
+        fetch('https://api.alquran.cloud/v1/surah')
+            .then(response => response.json())
+            .then(data => {
+                surahs = data.data;
+                displaySurahs(surahs);
+            });
+
+        function displaySurahs(filteredSurahs) {
+            const surahList = document.getElementById('surahList');
+            surahList.innerHTML = filteredSurahs.map(surah => `
+                <div class="surah-item" onclick="loadSurah(${surah.number})">
+                    <div class="surah-number">${surah.number}</div>
+                    <div class="surah-details">
+                        <div class="surah-name">${surah.name}</div>
+                        <div class="surah-info">${surah.englishName} • ${surah.numberOfAyahs} آية</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchSurahs(query) {
+            const filtered = surahs.filter(surah => 
+                surah.name.includes(query) ||
+                surah.englishName.toLowerCase().includes(query.toLowerCase())
+            );
+            displaySurahs(filtered);
+        }
+
+        function loadSurah(number) {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = '<div class="welcome-message">جاري التحميل...</div>';
+            
+            Promise.all([
+                fetch(`https://api.alquran.cloud/v1/surah/${number}`),
+                fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`)
+            ])
+                .then(([ayahsRes, tafsirRes]) => Promise.all([ayahsRes.json(), tafsirRes.json()]))
+                .then(([ayahsData, tafsirData]) => {
+                    const surah = ayahsData.data;
+                    let content = `
+                        <h2 class="welcome-title">سورة ${surah.name}</h2>
+                        ${surah.number !== 9 ? '<div style="text-align: center; font-size: 24px; margin: 20px 0;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>' : ''}
+                    `;
+
+                    surah.ayahs.forEach((ayah, index) => {
+                        content += `
+                            <div class="ayah-container">
+                                <div class="ayah-text">
+                                    <span class="ayah-number">${ayah.numberInSurah}</span>
+                                    ${ayah.text}
+                                </div>
+                                <div class="tafsir">
+                                    <strong>التفسير: </strong>
+                                    ${tafsirData.data.ayahs[index].text}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    mainContent.innerHTML = content;
+                    toggleSidebar();
+                });
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark');
+            const icon = document.querySelector('.fa-moon, .fa-sun');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        }
+    </script>
+</body>
+</html>
